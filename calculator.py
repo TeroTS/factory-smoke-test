@@ -5,3 +5,8 @@
 # Return the sum of two operands without external effects.
 def add(a, b):
     return a + b
+
+
+# Return the product of two operands without external effects.
+def multiply(a, b):
+    return a * b
