@@ -1,0 +1,4 @@
+#!/bin/sh
+# Confirm Python is available; this dependency-free fixture needs no installation.
+set -eu
+exec python3 --version

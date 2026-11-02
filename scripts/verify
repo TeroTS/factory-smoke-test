@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run the repository tests from its root and propagate their exit status.
+set -eu
+exec python3 -m unittest discover -s tests -v
