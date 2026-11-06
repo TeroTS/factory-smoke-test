@@ -2,7 +2,7 @@
 
 import unittest
 
-from calculator import add
+from calculator import add, square
 
 
 class AdditionTest(unittest.TestCase):
@@ -18,3 +18,14 @@ class AdditionTest(unittest.TestCase):
         self.assertEqual(add(0, 5), 5)
         self.assertEqual(add(5, 0), 5)
         self.assertEqual(add(0, 0), 0)
+
+
+class SquareTest(unittest.TestCase):
+    def test_positive_operand(self):
+        self.assertEqual(square(3), 9)
+
+    def test_negative_operand(self):
+        self.assertEqual(square(-3), 9)
+
+    def test_zero_operand(self):
+        self.assertEqual(square(0), 0)
