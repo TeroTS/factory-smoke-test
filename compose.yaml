@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: compose-smoke/Dockerfile
+    volumes:
+      - calculations:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).close()"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+      start_period: 2s
+
+  tests:
+    build:
+      context: .
+      dockerfile: compose-smoke/Dockerfile
+    user: "${SMOKE_UID:-1000}:${SMOKE_GID:-1000}"
+    working_dir: /workspace
+    environment:
+      PYTHONPATH: /workspace
+    volumes:
+      - .:/workspace
+    depends_on:
+      api:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -ec
+      - python -m unittest discover -s tests -v; python compose-smoke/test_api.py
+
+volumes:
+  calculations:

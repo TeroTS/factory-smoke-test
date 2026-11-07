@@ -1,4 +1,12 @@
 #!/bin/sh
-# Run the repository tests from its root and propagate their exit status.
+# Build/start the API, run tests once, and remove the stack even when tests fail.
 set -eu
-exec python3 -m unittest discover -s tests -v
+cd "$(dirname "$0")/.."
+export COMPOSE_FILE="$PWD/compose.yaml"
+export SMOKE_UID="$(id -u)" SMOKE_GID="$(id -g)"
+trap 'docker compose down --volumes' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+docker compose up -d --build --wait api
+docker compose run --rm tests
