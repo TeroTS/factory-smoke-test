@@ -7,6 +7,11 @@ def add(a, b):
     return a + b
 
 
+# Return the difference of two operands without external effects.
+def subtract(a, b):
+    return a - b
+
+
 # Return the product of two operands without external effects.
 def multiply(a, b):
     return a * b
